@@ -171,5 +171,3 @@ class Television(Episodic):
 
         self.showrunner = showrunner
         self.platform = platform
-
-

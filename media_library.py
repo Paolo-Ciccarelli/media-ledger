@@ -1,15 +1,15 @@
 from typing import Optional, List, Dict, Type, Union
 from datetime import date
-from media import Media, Book, Movie, Anime, Television
+from media import Media, Episodic, Anime, Book, Movie, Television
 
 class MediaLibrary:
     def __init__(self):
         self._all_media: List[Media] = []         # Ordered List for tabular view
         self._media_by_ID: Dict[int, Media] = {}  # Quick lookup by globalID
         self._media_by_type: Dict[Type, List[Media]] = {
+            Anime: [],
             Book: [],
             Movie: [],
-            Anime: [],
             Television: [],
         }    
 
@@ -31,14 +31,33 @@ class MediaLibrary:
             media: the episodic media object whose watched episode count is to be updated.
             new_count: the new number of episodes watched, must be a positive integer.
         """
-        if not isinstance(media, Anime):
+        if not isinstance(media, Episodic): 
             return
         # Ensure this exact object is one tracked under its concrete type
         if media not in self._media_by_type.get(type(media), []):
             return
-
+        # Ensures the new value is positive and does not exceed the total episode count.
         if 0 <= new_count <= media.episodes_total:
-            media.episodes_watched = new_count   
+            media.episodes_watched = new_count
+
+    def update_total_episodes(self, media: Media, new_count: int) -> None:
+        """
+        Purpose:
+            Updates the total number of episodes belonging to an episodic media item.
+            This should occur whenever a new season is officially released, ideally automatically.
+            In other words, the method applies only to media objects that are instances of Episodic.
+        Parameters:
+            media: the episodic media object whose total episode count is to be updated.
+            new_count: the new number of total episodes, must be a positive integer.
+        """
+        if not isinstance(media, Episodic): 
+            return
+        # Ensure this exact object is one tracked under its concrete type
+        if media not in self._media_by_type.get(type(media), []):
+            return
+        # Ensures the new value is positive and does not exceed the total episode count.
+        if 0 <= new_count > media.episodes_total:
+            media.episodes_watched = new_count
 
     def get_count(self) -> int:
         """
