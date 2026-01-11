@@ -75,3 +75,45 @@ class MediaLibrary:
         """
         return len(self._media_by_type.get(type, []))
 
+    def display_contents(self) -> None:
+        """
+        Displays all media in the library in a formatted table view.
+        """
+        # Verifies whether the library is empty before proceeding
+        if not self._all_media:
+            print("ERROR: Library is empty.")
+            return
+
+        # Define column widths
+        id_width = 5
+        type_width = 12
+        title_width = 30
+        details_width = 60
+
+        # Print header
+        header = f"{'ID':<{id_width}} {'Type':<{type_width}} {'Title':<{title_width}} {'Details':<{details_width}}"
+        print(header)
+        print("-" * (id_width + type_width + title_width + details_width + 3))
+
+        # Print each media item
+        for media in self._all_media:
+            media_id = str(media._global_ID)
+            media_type = type(media).__name__
+            title = media.title[:title_width]
+
+            # Generate details based on media type
+            if isinstance(media, Book):
+                details = f"{media.pages} pages | Author: {media.author}"
+            elif isinstance(media, Movie):
+                details = f"{media.length} min | Director: {media.director or 'N/A'}"
+            elif isinstance(media, Anime):
+                details = f"{media.episodes_watched}/{media.episodes_total} eps | {media.num_seasons} seasons"
+            elif isinstance(media, Television):
+                details = f"{media.episodes_watched}/{media.episodes_total} eps | {media.num_seasons} seasons | Platform: {media.platform or 'N/A'}"
+            else:
+                details = f"{media.length} units"
+
+            details = details[:details_width]
+
+            row = f"{media_id:<{id_width}} {media_type:<{type_width}} {title:<{title_width}} {details:<{details_width}}"
+            print(row)

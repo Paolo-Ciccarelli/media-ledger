@@ -8,6 +8,7 @@ class Media:
         self, 
         title: str, 
         length: int, 
+        completion_status: bool = False,
         date_completed: Optional[date]=None, 
         release_date: Optional[date]=None
     ):
@@ -18,6 +19,7 @@ class Media:
         self.length = length
         self.release_date = release_date
         self.date_completed = date_completed
+        self.completion_status = completion_status
 
 class Book(Media):
     localID_counter = 0
@@ -30,9 +32,15 @@ class Book(Media):
         binding: str, #New
         date_completed: Optional[date]=None,
         release_date: Optional[date]=None,
-        publisher: Optional[str]=None #New
+        publisher: Optional[str]=None, #New
+        completion_status: bool = False
     ):
-        super().__init__(title=title, length=pages, date_completed=date_completed, release_date=release_date)
+        super().__init__(
+            title=title, 
+            length=pages, 
+            date_completed=date_completed, 
+            release_date=release_date,
+            completion_status=completion_status)
         Book.localID_counter += 1
         self.localID = Book.localID_counter
         
@@ -58,15 +66,21 @@ class Movie(Media):
     def __init__(
         self, 
         title: str, 
-        length: int, 
+        length: int, #in minutes
         date_completed: Optional[date]=None, 
         director: Optional[str]=None, #New
         release_date: Optional[date]=None,
         watched_in_theatres = False, #New
         streaming_platform: Optional[str]=None, #New
-        distributor: Optional[str]=None #New
+        distributor: Optional[str]=None, #New,
+        completion_status: bool = False
     ):
-        super().__init__(title=title, length=length, date_completed=date_completed, release_date=release_date)
+        super().__init__(
+            title=title, 
+            length=length, 
+            date_completed=date_completed, 
+            release_date=release_date,
+            completion_status=completion_status)
         Movie.localID_counter += 1
         self.localID = Movie.localID_counter
 
@@ -81,15 +95,19 @@ class Episodic(Media):
         title: str,
         episodes_total: int,
         episodes_watched: int = 0,
+        num_seasons: int = 1, #New
         date_completed: Optional[date] = None,
         release_date: Optional[date] = None,
+        completion_status: bool = False
     ):
         super().__init__(
             title=title,
             length=episodes_total,
             date_completed=date_completed,
             release_date=release_date,
+            completion_status=completion_status    
         )
+        self.num_seasons = num_seasons
         # Use the property setter for validation
         self.episodes_watched = episodes_watched
 
@@ -129,22 +147,25 @@ class Anime(Episodic):
         title: str, 
         episodes_total: int, #New Alias 
         episodes_watched: int = 0, #New
+        num_seasons: int = 1,
         date_completed: Optional[date]=None,
         director: Optional[str]=None, #New
-        release_date: Optional[date]=None
+        release_date: Optional[date]=None,
+        completion_status: bool = False
     ):
         super().__init__(
             title=title,
             episodes_total=episodes_total,
             episodes_watched=episodes_watched,
+            num_seasons=num_seasons,
             date_completed=date_completed,
             release_date=release_date,
+            completion_status=completion_status
         )
         Anime.localID_counter += 1
         self.localID = Anime.localID_counter
         
         self.director = director
-        self.episodes_watched = episodes_watched
 
 class Television(Episodic):
     localID_counter = 0
@@ -154,17 +175,21 @@ class Television(Episodic):
         title: str,
         episodes_total: int,
         episodes_watched: int = 0,
+        num_seasons: int = 1,
         date_completed: Optional[date] = None,
         showrunner: Optional[str] = None,
         release_date: Optional[date] = None,
         platform: Optional[str] = None,
+        completion_status: bool = False,
     ):
         super().__init__(
             title=title,
             episodes_total=episodes_total,
             episodes_watched=episodes_watched,
+            num_seasons=num_seasons,
             date_completed=date_completed,
             release_date=release_date,
+            completion_status=completion_status
         )
         Television.localID_counter += 1
         self.localID = Television.localID_counter
