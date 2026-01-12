@@ -94,7 +94,7 @@ class Episodic(Media):
         self,
         title: str,
         episodes_total: int,
-        episodes_watched: int = 0,
+        episodes_watched: int = 0, #New
         num_seasons: int = 1, #New
         date_completed: Optional[date] = None,
         release_date: Optional[date] = None,

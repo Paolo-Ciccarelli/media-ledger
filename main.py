@@ -1,6 +1,7 @@
 from media import Movie, Television
 from media_library import MediaLibrary
 from datetime import date
+import serialization
 
 media_library = MediaLibrary()
 
@@ -25,3 +26,6 @@ media_library.insert_media(media_object1)
 media_library.insert_media(media_object2)
 media_library.display_contents()
 
+serialization.save_library(media_library, "savefile.json")
+testlib = serialization.load_library("savefile.json")
+testlib.display_contents()

@@ -1,0 +1,40 @@
+{
+  "media": [
+    {
+      "global_id": 1,
+      "type": "Television",
+      "title": "Stranger Things",
+      "length": 42,
+      "completion_status": true,
+      "date_completed": "2025-11-25",
+      "release_date": "2016-07-15",
+      "local_id": 1,
+      "episodes_watched": 42,
+      "episodes_total": 42,
+      "num_seasons": 5,
+      "platform": "Netflix",
+      "showrunner": null
+    },
+    {
+      "global_id": 2,
+      "type": "Movie",
+      "title": "Wake Up Dead Man",
+      "length": 144,
+      "completion_status": true,
+      "date_completed": null,
+      "release_date": null,
+      "local_id": 1,
+      "director": "Rian Johnson",
+      "watched_in_theatres": false,
+      "streaming_platform": "Netflix",
+      "distributor": null
+    }
+  ],
+  "counters": {
+    "global_id": 2,
+    "book_id": 0,
+    "movie_id": 1,
+    "anime_id": 0,
+    "television_id": 1
+  }
+}
